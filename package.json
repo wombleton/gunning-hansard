@@ -1,0 +1,20 @@
+{
+  "name": "gunning-hansard",
+  "description": "Gunning-Fog'd Hansard",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "async": "latest",
+    "cheerio": "latest",
+    "coffee-script": "latest",
+    "felix-couchdb": "latest",
+    "moment": "latest",
+    "request": "latest",
+    "text-statistics": "latest",
+    "underscore": "latest",
+    "underscore.string": "latest"
+  },
+  "devDependencies": {
+      "kanso": "latest"
+  }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "gunning-hansard",
+    "version": "0.0.1",
+    "description": "Gunning Hansard",
+    "modules": ["lib"],
+    "load": "lib/index",
+    "dependencies": {
+        "modules": null,
+        "properties": null
+    }
+}
