@@ -69,13 +69,13 @@ scrapePages = ->
           date = $('.information dd').text()
           d = moment(date)
           subject = $($('p.SubsQuestion strong')[2]).text()
-          subject = subject.replace(/.*Minister (of|for) /, '')
+          subject = _s.lines(subject.replace(/.*Minister (of|for) /, '')).join('').replace(/\r/g, ' ')
           subs = $('p.SubsQuestion, p.SubsAnswer, p.SupQuestion, p.SupAnswer', '.copy .section')
           blocks = _.map(subs, (sub) ->
             speaker = $(sub).find('strong').text().toUpperCase()
             text = _s.lines($(sub).text()).join('').replace(/\r/g, ' ').trim()
             [ all, header, text ] = text.match(re)
-            speaker = speaker.replace(/(\(.+\).*$)|:|(^\d+\.)/g, '').trim()
+            speaker = _s.lines(speaker).join('').replace(/\r/, '').replace(/(\(.+\).*$)|:|(^\d+\.)/g, '').trim()
             speaker: speaker, subject: subject, text: text
           )
           row.doc.scraped = true
