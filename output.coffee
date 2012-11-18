@@ -45,12 +45,10 @@ db.view('gunning-hansard', 'blocks', include_docs: true, (err, r) ->
       </h2>
     """
 
-    html += """
-      <table>
-    """
     _.each(speaker.subjects, (talks, title) ->
       { meanFog, stdDevFog } = talks
       html += """
+        <table>
         <tbody>
           <tr>
             <th class="subject">#{name} speaking on ... #{_s.prune(title, 40)}</th>
@@ -71,12 +69,9 @@ db.view('gunning-hansard', 'blocks', include_docs: true, (err, r) ->
         """
       )
       html += """
-        </tbody>
+        </tbody></table>
       """
     )
-    html += """
-      </table>
-    """
     html
   )
   fs.writeFileSync('result.html', """<div class="results">#{result.join(' ')}</div>""")
