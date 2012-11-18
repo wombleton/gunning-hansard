@@ -14,7 +14,7 @@ fix = (n) ->
 
 db.view('gunning-hansard', 'blocks', include_docs: true, (err, r) ->
   _.each(r.rows, (row) ->
-    { gunningFog, speaker, subject, date, gunningFog } = row.doc
+    { gunningFog, speaker, subject, date, gunningFog, url } = row.doc
 
     speaker = _s.lines(speaker).join(' ').replace(/\r/, '').replace(/\s*\(.+$/, '')
     debugger if speaker.indexOf('(') > 0
@@ -25,6 +25,7 @@ db.view('gunning-hansard', 'blocks', include_docs: true, (err, r) ->
     data[speaker].subjects[subject].push(
       date: moment(date.reverse().join(' ')).format('DD MMM YYYY')
       fog: gunningFog
+      url: url
     )
   )
   _.each(data, (speaker, name) ->
@@ -59,11 +60,11 @@ db.view('gunning-hansard', 'blocks', include_docs: true, (err, r) ->
         html += """<th class="fog" colspan="2">#{fix(meanFog - stdDevFog)} &mdash; #{fix(meanFog + stdDevFog)}</th>"""
       html += """</tr>"""
       _.each(talks, (talk) ->
-        { date, fog } = talk
+        { date, fog, url } = talk
         html += """
           <tr>
             <td></td>
-            <td class="date">#{date}</td>
+            <td class="date"><a href="#{url}">#{date}</a></td>
             <td class="fog">#{fog}</td>
           </tr>
         """

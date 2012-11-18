@@ -105,8 +105,33 @@ scrapePages = ->
           scrapePages()
       )
     else
-      rateQuestions()
+      deleteBlocks(->
+        rateQuestions()
+      )
   )
+
+deleteBlocks = (callback) ->
+  db.view('gunning-hansard', 'blocks', include_docs: true, (err, r) ->
+    async.forEach(r.rows, (row, cb) ->
+      doc = row.doc
+      db.removeDoc(doc._id, doc._rev, (err) ->
+        cb(err)
+      )
+    , (err) ->
+      db.view('gunning-hansard', 'rated_questions', include_docs: true, (err, r) ->
+        async.forEach(r.rows, (row, cb) ->
+          doc = row.doc
+          delete doc.rated
+          db.saveDoc(doc, (err) ->
+            cb(err)
+          )
+        , (err) ->
+          callback(err)
+        )
+      )
+    )
+  )
+
 
 rateQuestions = ->
   db.view('gunning-hansard', 'unrated_questions', include_docs: true, limit: 10, (err, r) ->
