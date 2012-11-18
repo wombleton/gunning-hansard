@@ -42,7 +42,7 @@ db.view('gunning-hansard', 'blocks', include_docs: true, (err, r) ->
     { meanFog, stdDevFog } = speaker
     html = """
       <h2>
-        #{name} <span class="fog" colspan="2">#{if stdDevFog < 0.1 then fix(meanFog) else "#{fix(meanFog - stdDevFog)} &mdash; #{fix(meanFog + stdDevFog)}"}</span>
+        #{name} <span class="fog" colspan="2">Talks @ #{if true then fix(meanFog) else "#{fix(meanFog - stdDevFog)} &mdash; #{fix(meanFog + stdDevFog)}"} GFI</span>
       </h2>
     """
 
@@ -54,8 +54,8 @@ db.view('gunning-hansard', 'blocks', include_docs: true, (err, r) ->
           <tr>
             <th class="subject">#{name} speaking on ... #{_s.prune(title, 40)}</th>
       """
-      if stdDevFog < 0.1
-        html += """<th class="fog" colspan="2">#{fix(meanFog)}</th>"""
+      if true
+        html += """<th class="fog" colspan="2">Talks @ #{fix(meanFog)} GFI</th>"""
       else
         html += """<th class="fog" colspan="2">#{fix(meanFog - stdDevFog)} &mdash; #{fix(meanFog + stdDevFog)}</th>"""
       html += """</tr>"""
