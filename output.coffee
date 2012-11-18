@@ -65,7 +65,7 @@ db.view('gunning-hansard', 'blocks', include_docs: true, (err, r) ->
           <tr>
             <td></td>
             <td class="date"><a href="#{url}">#{date}</a></td>
-            <td class="fog">#{fog}</td>
+            <td class="fog"><a href="#{url}">#{fog}</a></td>
           </tr>
         """
       )
