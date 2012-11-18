@@ -40,16 +40,13 @@ db.view('gunning-hansard', 'blocks', include_docs: true, (err, r) ->
   result = _.map(data, (speaker, name) ->
     { meanFog, stdDevFog } = speaker
     html = """
-      <table>
-        <thead>
-          <th class="name">#{name}</th>
+      <h2>
+        #{name}<span class="fog" colspan="2">#{if stdDevFog < 0.1 then fix(meanFog) else '#{fix(meanFog - stdDevFog)} &mdash; #{fix(meanFog + stdDevFog)}'}</span>
+      </h2>
     """
-    if stdDevFog < 0.1
-      html += """<th class="fog" colspan="2">#{fix(meanFog)}</th>"""
-    else
-      html += """<th class="fog" colspan="2">#{fix(meanFog - stdDevFog)} &mdash; #{fix(meanFog + stdDevFog)}</th>"""
+
     html += """
-        </thead>
+      <table>
     """
     _.each(speaker.subjects, (talks, title) ->
       { meanFog, stdDevFog } = talks
@@ -68,8 +65,8 @@ db.view('gunning-hansard', 'blocks', include_docs: true, (err, r) ->
         html += """
           <tr>
             <td></td>
-            <td>#{date}</td>
-            <td>#{fog}</td>
+            <td class="date">#{date}</td>
+            <td class="fog">#{fog}</td>
           </tr>
         """
       )
