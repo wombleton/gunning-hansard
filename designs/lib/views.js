@@ -42,3 +42,19 @@ exports.blocks = {
         }
     }
 }
+
+exports.senti_blocks = {
+    map: function(doc) {
+        if (doc.type === 'block' && doc.sentiment) {
+            emit(doc._id, null);
+        }
+    }
+}
+
+exports.unsenti_blocks = {
+    map: function(doc) {
+        if (doc.type === 'block' && !doc.sentiment) {
+            emit(doc._id, null);
+        }
+    }
+}

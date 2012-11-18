@@ -10,6 +10,7 @@
     "felix-couchdb": "latest",
     "moment": "latest",
     "request": "latest",
+    "stats-array": "latest",
     "text-statistics": "latest",
     "underscore": "latest",
     "underscore.string": "latest"
