@@ -79,6 +79,5 @@ db.view('gunning-hansard', 'blocks', include_docs: true, (err, r) ->
     """
     html
   )
-  fs.writeFileSync('result.html', result.join(' '))
+  fs.writeFileSync('result.html', """<div class="results">#{result.join(' ')}</div>""")
 )
-
