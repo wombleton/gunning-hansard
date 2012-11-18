@@ -133,6 +133,8 @@ rateQuestions = ->
             gunningFog: stats.gunningFogScore(text)
             smogIndex: stats.smogIndex(text)
             fleschKincaidReadingEase: stats.fleschKincaidReadingEase(text)
+            url: doc.url
+            doc_id: doc._id
           , (err) ->
             cb2(err)
           )
