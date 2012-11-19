@@ -17,11 +17,8 @@ senti = ->
       params =
         app_key: process.env.APP_KEY
         phrase: row.doc.text
-      request(
-        method: 'POST'
-        uri: 'http://api.sentirate.com/sentiment/request.do'
-        body: qs.stringify(params)
-      , (err, res, body) ->
+      request.post('http://api.sentirate.com/sentiment/request.do', form: params, (err, res, body) ->
+        debugger
         result = JSON.parse(body)
         if result.error
           cb('wait')
