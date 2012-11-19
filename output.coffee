@@ -67,7 +67,7 @@ db.view('gunning-hansard', 'blocks', include_docs: true, (err, r) ->
             <td></td>
             <td class="date"><a href="#{url}">#{date}</a></td>
             <td class="fog"><a href="#{url}">#{fog}</a></td>
-            <td class="sentiment"><a href="#{url}">#{sentiment?.sentiment_rank}</a></td>
+            <td class="sentiment"><a href="#{url}">#{if sentiment then _s.humanize(sentiment.sentiment_rank) else ''}</a></td>
           </tr>
         """
       )
