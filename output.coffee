@@ -14,7 +14,7 @@ fix = (n) ->
 
 db.view('gunning-hansard', 'blocks', include_docs: true, (err, r) ->
   _.each(r.rows, (row) ->
-    { gunningFog, speaker, subject, date, gunningFog, url } = row.doc
+    { gunningFog, sentiment, speaker, subject, date, gunningFog, url } = row.doc
 
     speaker = _s.lines(speaker).join(' ').replace(/\r/, '').replace(/\s*\(.+$/, '')
     debugger if speaker.indexOf('(') > 0
@@ -25,6 +25,7 @@ db.view('gunning-hansard', 'blocks', include_docs: true, (err, r) ->
     data[speaker].subjects[subject].push(
       date: moment(date.reverse().join(' ')).format('DD MMM YYYY')
       fog: gunningFog
+      sentiment: sentiment
       url: url
     )
   )
@@ -42,7 +43,7 @@ db.view('gunning-hansard', 'blocks', include_docs: true, (err, r) ->
     { meanFog, stdDevFog } = speaker
     html = """
       <h2>
-        #{name} <span class="fog" colspan="2">Talks @ #{if true then fix(meanFog) else "#{fix(meanFog - stdDevFog)} &mdash; #{fix(meanFog + stdDevFog)}"} GFI</span>
+        #{name} <span class="fog" >Talks @ #{if true then fix(meanFog) else "#{fix(meanFog - stdDevFog)} &mdash; #{fix(meanFog + stdDevFog)}"} GFI</span>
       </h2>
     """
 
@@ -55,17 +56,18 @@ db.view('gunning-hansard', 'blocks', include_docs: true, (err, r) ->
             <th class="subject">#{name} speaking on ... #{_s.prune(title, 40)}</th>
       """
       if true
-        html += """<th class="fog" colspan="2">Talks @ #{fix(meanFog)} GFI</th>"""
+        html += """<th class="fog" colspan="3">Talks @ #{fix(meanFog)} GFI</th>"""
       else
-        html += """<th class="fog" colspan="2">#{fix(meanFog - stdDevFog)} &mdash; #{fix(meanFog + stdDevFog)}</th>"""
+        html += """<th class="fog" colspan="3">#{fix(meanFog - stdDevFog)} &mdash; #{fix(meanFog + stdDevFog)}</th>"""
       html += """</tr>"""
       _.each(talks, (talk) ->
-        { date, fog, url } = talk
+        { date, fog, sentiment, url } = talk
         html += """
           <tr>
             <td></td>
             <td class="date"><a href="#{url}">#{date}</a></td>
             <td class="fog"><a href="#{url}">#{fog}</a></td>
+            <td class="sentiment"><a href="#{url}">#{sentiment?.sentiment_rank}</a></td>
           </tr>
         """
       )
