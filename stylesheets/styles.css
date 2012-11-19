@@ -869,8 +869,14 @@ h2 .fog {
     font-size: 1.3em;
 }
 
-td.date, td.fog, td.sentiment {
-    width: 100px;
+td.fog {
+    width: 40px;
+}
+td.date {
+    width: 90px;
+}
+td.sentiment {
+    width: 110px;
 }
 
 tbody tr:nth-child(2n+1) {
